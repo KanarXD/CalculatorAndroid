@@ -17,7 +17,7 @@
         android:layout_weight="0.4"
         android:background="@color/green"
         android:orientation="vertical"
-        android:padding="5dp"
+        android:padding="10dp"
         tools:ignore="NestedWeights">
 
         <LinearLayout style="@style/CalculatorStackAreaRow">
@@ -28,9 +28,10 @@
                 android:text="DEG" />
 
             <TextView
+                android:id="@+id/stack_counter"
                 style="@style/CalculatorStackAreaTextView.Header"
                 android:layout_weight="0.4"
-                android:text="STACK: " />
+                android:text="STACK: 0" />
         </LinearLayout>
 
         <LinearLayout style="@style/CalculatorStackAreaRow">
@@ -40,8 +41,8 @@
                 android:text="4:" />
 
             <TextView
-                style="@style/CalculatorStackAreaTextView.Number"
-                android:text="number" />
+                android:id="@+id/stack_level_4"
+                style="@style/CalculatorStackAreaTextView.Number" />
         </LinearLayout>
 
         <LinearLayout style="@style/CalculatorStackAreaRow">
@@ -51,8 +52,8 @@
                 android:text="3:" />
 
             <TextView
-                style="@style/CalculatorStackAreaTextView.Number"
-                android:text="number" />
+                android:id="@+id/stack_level_3"
+                style="@style/CalculatorStackAreaTextView.Number" />
 
         </LinearLayout>
 
@@ -63,8 +64,8 @@
                 android:text="2:" />
 
             <TextView
-                style="@style/CalculatorStackAreaTextView.Number"
-                android:text="number" />
+                android:id="@+id/stack_level_2"
+                style="@style/CalculatorStackAreaTextView.Number" />
         </LinearLayout>
 
         <LinearLayout style="@style/CalculatorStackAreaRow">
@@ -74,8 +75,19 @@
                 android:text="1:" />
 
             <TextView
-                style="@style/CalculatorStackAreaTextView.Number"
-                android:text="number" />
+                android:id="@+id/stack_level_1"
+                style="@style/CalculatorStackAreaTextView.Number" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/CalculatorStackAreaRow">
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Text"
+                android:text="&#x279C;" />
+
+            <TextView
+                android:id="@+id/numberInputText"
+                style="@style/CalculatorStackAreaTextView.Number" />
         </LinearLayout>
 
     </LinearLayout>
@@ -103,7 +115,6 @@
                 style="@style/CalculatorButton"
                 android:text="ac" />
         </TableRow>
-
 
         <TableRow style="@style/CalculatorButtonRow">
 
