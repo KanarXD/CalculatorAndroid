@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_grey"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".MainActivity"
+    tools:ignore="HardcodedText">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.4"
+        android:background="@color/green"
+        android:orientation="vertical"
+        android:padding="5dp"
+        tools:ignore="NestedWeights">
+
+        <LinearLayout style="@style/CalculatorStackAreaRow">
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Header"
+                android:layout_weight="0.6"
+                android:text="DEG" />
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Header"
+                android:layout_weight="0.4"
+                android:text="STACK: " />
+        </LinearLayout>
+
+        <LinearLayout style="@style/CalculatorStackAreaRow">
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Text"
+                android:text="4:" />
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Number"
+                android:text="number" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/CalculatorStackAreaRow">
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Text"
+                android:text="3:" />
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Number"
+                android:text="number" />
+
+        </LinearLayout>
+
+        <LinearLayout style="@style/CalculatorStackAreaRow">
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Text"
+                android:text="2:" />
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Number"
+                android:text="number" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/CalculatorStackAreaRow">
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Text"
+                android:text="1:" />
+
+            <TextView
+                style="@style/CalculatorStackAreaTextView.Number"
+                android:text="number" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6">
+
+        <TableRow style="@style/CalculatorButtonRow">
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="+" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="-" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="*" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="ac" />
+        </TableRow>
+
+
+        <TableRow style="@style/CalculatorButtonRow">
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="/" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="y^x" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="sqrt" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="drop" />
+        </TableRow>
+
+        <TableRow style="@style/CalculatorButtonRow">
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="7" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="8" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="9" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="swap" />
+        </TableRow>
+
+        <TableRow style="@style/CalculatorButtonRow">
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="4" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="5" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="6" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="enter" />
+        </TableRow>
+
+        <TableRow style="@style/CalculatorButtonRow">
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="1" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="2" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="3" />
+
+            <Button
+                style="@style/CalculatorButton"
+                android:text="0" />
+        </TableRow>
+
+    </TableLayout>
+
+</LinearLayout>
