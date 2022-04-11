@@ -1,4 +1,4 @@
-package edu.put.calculator
+package edu.put.calculator.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import edu.put.calculator.R
 import edu.put.calculator.models.CalculatorState
 import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigDecimal
@@ -31,7 +32,6 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(TAG, "Clicked button text: $buttonString")
 
-        val number: Int? = buttonString.toIntOrNull()
         if (buttonString.matches("^[-+*/]$".toRegex())) {
             val operator: String = buttonString
             Log.d(TAG, "Math operator button clicked: $operator")
@@ -46,14 +46,15 @@ class MainActivity : AppCompatActivity() {
             saveCurrentState()
             val number2: BigDecimal = currentState.numberStack.pop()
             val number1: BigDecimal = currentState.numberStack.pop()
-            Log.d(TAG, "Performing calculation $number1 $operator $number2")
+            Log.d(TAG, "Performing calculation: $number1 $operator $number2")
             val result: BigDecimal = calculateOperation(operator, number1, number2)
-            Log.d(TAG, "Performed calculation $number1 $operator $number2 = $result")
+            Log.d(TAG, "Performed calculation: $number1 $operator $number2 = $result")
             currentState.numberStack.push(result)
             drawStackArea()
             return
         }
 
+        val number: Int? = buttonString.toIntOrNull()
         if (number != null) {
             Log.d(TAG, "Number button clicked: $number")
             saveCurrentState()
@@ -97,10 +98,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveCurrentState() {
-        lastStates.push(CalculatorState(currentState))
-    }
-
     fun undoCalculatorState(@Suppress("UNUSED_PARAMETER") view: View) {
         if (lastStates.size <= 0) {
             Log.d(TAG, "Cannot undo (no last states)")
@@ -109,6 +106,10 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "Performing undo")
         currentState = lastStates.pop()
         drawStackArea()
+    }
+
+    private fun saveCurrentState() {
+        lastStates.push(CalculatorState(currentState))
     }
 
     private fun calculateOperation(

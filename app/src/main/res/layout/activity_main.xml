@@ -6,7 +6,7 @@
     android:background="@color/light_grey"
     android:orientation="vertical"
     android:padding="10dp"
-    tools:context=".MainActivity"
+    tools:context=".activities.MainActivity"
     tools:ignore="HardcodedText">
 
     <LinearLayout
