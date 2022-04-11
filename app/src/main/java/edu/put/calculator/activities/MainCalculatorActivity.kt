@@ -1,25 +1,29 @@
 package edu.put.calculator.activities
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import edu.put.calculator.R
+import edu.put.calculator.models.CalculatorSettings
 import edu.put.calculator.models.CalculatorState
 import kotlinx.android.synthetic.main.activity_main.*
 import java.math.BigDecimal
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainCalculatorActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private val lastStates: Stack<CalculatorState> = Stack()
     private var currentState: CalculatorState = CalculatorState()
+    private var settings: CalculatorSettings = CalculatorSettings(5, Color())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.my_toolbar))
     }
 
     fun onButtonClicked(view: View) {
