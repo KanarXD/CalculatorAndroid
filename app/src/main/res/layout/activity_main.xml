@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.MainCalculatorActivity"
-    tools:ignore="HardcodedText">
+    tools:context=".activities.MainCalculatorActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -14,12 +13,13 @@
         android:background="@color/dark_grey"
         android:elevation="4dp">
 
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="settings"></Button>
+            android:layout_marginEnd="10dp"
+            android:onClick="onSettingsButtonClicked"
+            android:text="@string/settings" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -29,7 +29,8 @@
         android:layout_height="match_parent"
         android:background="@color/light_grey"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="10dp"
+        tools:ignore="HardcodedText">
 
         <LinearLayout
             android:layout_width="match_parent"

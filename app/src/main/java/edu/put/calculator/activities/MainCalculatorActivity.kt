@@ -1,11 +1,14 @@
 package edu.put.calculator.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import edu.put.calculator.R
 import edu.put.calculator.models.CalculatorSettings
@@ -15,15 +18,26 @@ import java.math.BigDecimal
 import java.util.*
 
 class MainCalculatorActivity : AppCompatActivity() {
+    @Suppress("PrivatePropertyName")
     private val TAG = "MainActivity"
+    private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private val lastStates: Stack<CalculatorState> = Stack()
     private var currentState: CalculatorState = CalculatorState()
     private var settings: CalculatorSettings = CalculatorSettings(5, Color())
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.my_toolbar))
+        activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data = result.data
+                println(data)
+            }
+        }
     }
 
     fun onButtonClicked(view: View) {
@@ -146,4 +160,9 @@ class MainCalculatorActivity : AppCompatActivity() {
             if (currentState.numberStack.size > 3) currentState.numberStack[currentState.numberStack.size - 4].toString() else ""
     }
 
+    @Suppress("UNUSED_PARAMETER")
+    fun onSettingsButtonClicked(view: View) {
+        val intent = Intent(this, CalculatorSettingsActivity::class.java)
+        activityResultLauncher.launch(intent)
+    }
 }

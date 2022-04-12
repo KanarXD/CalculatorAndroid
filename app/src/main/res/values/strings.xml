@@ -2,4 +2,6 @@
     <string name="app_name">Calculator</string>
     <string name="number_precision">Number precision</string>
     <string name="color">Color</string>
+    <string name="save">save</string>
+    <string name="settings">settings</string>
 </resources>
