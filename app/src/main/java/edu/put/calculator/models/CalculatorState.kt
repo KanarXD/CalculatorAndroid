@@ -25,5 +25,9 @@ class CalculatorState {
         this.numberInputString = numberInputString
     }
 
+    override fun toString(): String {
+        return "CalculatorState(numberStack=$numberStack, numberInputString='$numberInputString')"
+    }
+
 
 }

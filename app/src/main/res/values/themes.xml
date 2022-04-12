@@ -3,6 +3,7 @@
     <style name="Theme.Calculator" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/light_grey</item>
         <item name="colorPrimaryDark">@color/dark_grey</item>
+        <item name="titleTextColor">@color/white</item>
 
 <!--        <item name="android:textColor">@color/calculator_button_text</item>-->
 <!--        <item name="android:background">@color/light_grey</item>-->

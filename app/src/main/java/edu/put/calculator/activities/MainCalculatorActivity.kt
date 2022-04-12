@@ -23,19 +23,22 @@ class MainCalculatorActivity : AppCompatActivity() {
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private val lastStates: Stack<CalculatorState> = Stack()
     private var currentState: CalculatorState = CalculatorState()
-    private var settings: CalculatorSettings = CalculatorSettings(5, Color())
+    private var settings: CalculatorSettings = CalculatorSettings(5)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.my_toolbar))
+        setSupportActionBar(findViewById(R.id.main_activity_toolbar))
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                val data = result.data
-                println(data)
+                val intent = result.data
+                println(intent)
+
+                val newSettings =intent?.getParcelableExtra<CalculatorSettings>("settings")
+                println(newSettings)
             }
         }
     }
@@ -163,6 +166,7 @@ class MainCalculatorActivity : AppCompatActivity() {
     @Suppress("UNUSED_PARAMETER")
     fun onSettingsButtonClicked(view: View) {
         val intent = Intent(this, CalculatorSettingsActivity::class.java)
+        intent.putExtra("settings", settings)
         activityResultLauncher.launch(intent)
     }
 }
