@@ -2,7 +2,6 @@ package edu.put.calculator.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,13 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.put.calculator.R
 import edu.put.calculator.models.CalculatorSettings
 import edu.put.calculator.models.CalculatorState
-import kotlinx.android.synthetic.main.activity_main.*
-import java.math.BigDecimal
+import kotlinx.android.synthetic.main.activity_calculator_main.*
 import java.util.*
 
 class MainCalculatorActivity : AppCompatActivity() {
     @Suppress("PrivatePropertyName")
-    private val TAG = "MainActivity"
+    private val TAG = "MainCalculatorActivity"
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private val lastStates: Stack<CalculatorState> = Stack()
     private var currentState: CalculatorState = CalculatorState()
@@ -28,7 +26,7 @@ class MainCalculatorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_calculator_main)
         setSupportActionBar(findViewById(R.id.main_activity_toolbar))
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -37,7 +35,7 @@ class MainCalculatorActivity : AppCompatActivity() {
                 val intent = result.data
                 println(intent)
 
-                val newSettings =intent?.getParcelableExtra<CalculatorSettings>("settings")
+                val newSettings = intent?.getParcelableExtra<CalculatorSettings>("settings")
                 println(newSettings)
             }
         }
@@ -56,7 +54,6 @@ class MainCalculatorActivity : AppCompatActivity() {
         if (buttonString.matches("^[-+*/]$".toRegex())) {
             val operator: String = buttonString
             Log.d(TAG, "Math operator button clicked: $operator")
-
             if (currentState.numberStack.size < 2) {
                 Log.d(
                     TAG,
@@ -65,10 +62,10 @@ class MainCalculatorActivity : AppCompatActivity() {
                 return
             }
             saveCurrentState()
-            val number2: BigDecimal = currentState.numberStack.pop()
-            val number1: BigDecimal = currentState.numberStack.pop()
+            val number2: Double = currentState.numberStack.pop()
+            val number1: Double = currentState.numberStack.pop()
             Log.d(TAG, "Performing calculation: $number1 $operator $number2")
-            val result: BigDecimal = calculateOperation(operator, number1, number2)
+            val result: Double = calculateOperation(operator, number1, number2)
             Log.d(TAG, "Performed calculation: $number1 $operator $number2 = $result")
             currentState.numberStack.push(result)
             drawStackArea()
@@ -94,7 +91,7 @@ class MainCalculatorActivity : AppCompatActivity() {
             }
             "enter" -> {
                 Log.d(TAG, "ENTER button clicked")
-                val numberInput: BigDecimal? = currentState.numberInputString.toBigDecimalOrNull()
+                val numberInput: Double? = currentState.numberInputString.toDoubleOrNull()
                 if (numberInput == null) {
                     Log.d(TAG, "Empty input, cannot push on stack")
                     return
@@ -105,14 +102,15 @@ class MainCalculatorActivity : AppCompatActivity() {
                 currentState.numberStack.push(numberInput)
                 drawStackArea()
             }
-            "drop" -> if (currentState.numberStack.size > 0) {
+            "drop" -> {
                 Log.d(TAG, "DROP button clicked")
-                saveCurrentState()
-                val poppedNumber: Number = currentState.numberStack.pop()
-                currentState.numberInputString = poppedNumber.toString()
-                drawStackArea()
+                if (currentState.numberStack.size > 0) {
+                    saveCurrentState()
+                    val poppedNumber: Number = currentState.numberStack.pop()
+                    currentState.numberInputString = poppedNumber.toString()
+                    drawStackArea()
+                }
             }
-
             else -> {
 
             }
@@ -135,32 +133,38 @@ class MainCalculatorActivity : AppCompatActivity() {
 
     private fun calculateOperation(
         operation: String,
-        number1: BigDecimal,
-        number2: BigDecimal
-    ): BigDecimal {
-        return when (operation) {
-            "+" -> number1.add(number2)
-            "-" -> number1.minus(number2)
-            "*" -> number1.multiply(number2)
-            "/" -> number1.div(number2)
+        number1: Double,
+        number2: Double
+    ): Double {
+        val result: Double = when (operation) {
+            "+" -> number1 + number2
+            "-" -> number1 - number2
+            "*" -> number1 * number2
+            "/" -> number1 / number2
             else -> {
                 throw Exception("Not supported operation: $operation")
             }
         }
+        return result
     }
 
     @SuppressLint("SetTextI18n")
     private fun drawStackArea() {
         stack_counter.text = "STACK: ${currentState.numberStack.size}"
         numberInputText.text = currentState.numberInputString
-        stack_level_1.text =
-            if (currentState.numberStack.size > 0) currentState.numberStack[currentState.numberStack.size - 1].toString() else ""
-        stack_level_2.text =
-            if (currentState.numberStack.size > 1) currentState.numberStack[currentState.numberStack.size - 2].toString() else ""
-        stack_level_3.text =
-            if (currentState.numberStack.size > 2) currentState.numberStack[currentState.numberStack.size - 3].toString() else ""
-        stack_level_4.text =
-            if (currentState.numberStack.size > 3) currentState.numberStack[currentState.numberStack.size - 4].toString() else ""
+        stack_level_1.text = prepareStackValue(1)
+        stack_level_2.text = prepareStackValue(2)
+        stack_level_3.text = prepareStackValue(3)
+        stack_level_4.text = prepareStackValue(4)
+    }
+
+    private fun prepareStackValue(stackLevel: Int): String {
+        if (currentState.numberStack.size > stackLevel - 1) {
+            val number: Double =
+                currentState.numberStack[currentState.numberStack.size - stackLevel]
+            return String.format("%.${settings.numberPrecision}f", number)
+        }
+        return ""
     }
 
     @Suppress("UNUSED_PARAMETER")

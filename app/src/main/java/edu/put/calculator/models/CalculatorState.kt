@@ -1,11 +1,10 @@
 package edu.put.calculator.models
 
-import java.math.BigDecimal
 import java.util.*
 
 class CalculatorState {
 
-    var numberStack: Stack<BigDecimal>
+    var numberStack: Stack<Double>
     var numberInputString: String
 
 
@@ -20,7 +19,7 @@ class CalculatorState {
         calculatorState.numberStack.stream().forEach { number -> this.numberStack.push(number) }
     }
 
-    constructor(numberStack: Stack<BigDecimal>, numberInputString: String) {
+    constructor(numberStack: Stack<Double>, numberInputString: String) {
         this.numberStack = numberStack
         this.numberInputString = numberInputString
     }

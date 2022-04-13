@@ -17,7 +17,6 @@ class CalculatorSettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         currentSettings = intent.getParcelableExtra("settings")!!
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

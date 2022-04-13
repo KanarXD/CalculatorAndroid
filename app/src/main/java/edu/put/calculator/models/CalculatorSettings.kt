@@ -1,6 +1,5 @@
 package edu.put.calculator.models
 
-import android.graphics.Color
 import android.os.Parcel
 import android.os.Parcelable
 import android.os.Parcelable.Creator
@@ -9,12 +8,7 @@ class CalculatorSettings(val numberPrecision: Int) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readInt()
-    ) {
-    }
-
-    override fun toString(): String {
-        return "CalculatorSettings(numberPrecision=$numberPrecision)"
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(numberPrecision)
@@ -32,6 +26,11 @@ class CalculatorSettings(val numberPrecision: Int) : Parcelable {
         override fun newArray(size: Int): Array<CalculatorSettings?> {
             return arrayOfNulls(size)
         }
+
+    }
+
+    override fun toString(): String {
+        return "CalculatorSettings(numberPrecision=$numberPrecision)"
     }
 
 }
