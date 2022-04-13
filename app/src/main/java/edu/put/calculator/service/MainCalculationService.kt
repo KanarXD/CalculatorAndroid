@@ -1,7 +1,6 @@
 package edu.put.calculator.service
 
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import edu.put.calculator.activities.MainCalculatorActivity
 import edu.put.calculator.models.CalculatorSettings
@@ -16,16 +15,22 @@ class MainCalculationService(private val mainCalculatorActivity: MainCalculatorA
     var currentState: CalculatorState = CalculatorState()
     var settings: CalculatorSettings = CalculatorSettings(5)
 
-    fun onButtonClicked(view: View) {
-        if (view !is Button) {
-            Log.d(TAG, "onButtonClicked view is not Button")
+    fun onNumberButtonClicked(button: Button) {
+        val buttonString: String = button.text as String
+        Log.d(TAG, "Clicked number button text: $buttonString")
+        val number: Int? = buttonString.toIntOrNull()
+        if (number != null) {
+            Log.d(TAG, "Number button clicked: $number")
+            saveCurrentState()
+            currentState.numberInputString += number.toString()
+            mainCalculatorActivity.drawStackArea()
             return
         }
-        val button: Button = view
+    }
+
+    fun onCalculationButtonClicked(button: Button) {
         val buttonString: String = button.text as String
-
-        Log.d(TAG, "Clicked button text: $buttonString")
-
+        Log.d(TAG, "Clicked calculation button text: $buttonString")
         if (buttonString.matches("^[-+*/]$".toRegex())) {
             val operator: String = buttonString
             Log.d(TAG, "Math operator button clicked: $operator")
@@ -46,16 +51,11 @@ class MainCalculationService(private val mainCalculatorActivity: MainCalculatorA
             mainCalculatorActivity.drawStackArea()
             return
         }
+    }
 
-        val number: Int? = buttonString.toIntOrNull()
-        if (number != null) {
-            Log.d(TAG, "Number button clicked: $number")
-            saveCurrentState()
-            currentState.numberInputString += number.toString()
-            mainCalculatorActivity.drawStackArea()
-            return
-        }
-
+    fun onActionButtonClicked(button: Button) {
+        val buttonString: String = button.text as String
+        Log.d(TAG, "Clicked action button text: $buttonString")
         when (buttonString) {
             "ac" -> {
                 Log.d(TAG, "AC button clicked")
@@ -102,19 +102,6 @@ class MainCalculationService(private val mainCalculatorActivity: MainCalculatorA
         mainCalculatorActivity.drawStackArea()
     }
 
-    fun prepareStackValue(stackLevel: Int): String {
-        if (currentState.numberStack.size > stackLevel - 1) {
-            val number: Double =
-                currentState.numberStack[currentState.numberStack.size - stackLevel]
-            return DecimalFormat("#." + "#".repeat(settings.numberPrecision)).format(number)
-        }
-        return ""
-    }
-
-    private fun saveCurrentState() {
-        lastStates.push(CalculatorState(currentState))
-    }
-
     private fun calculateOperation(
         operation: String,
         number1: Double,
@@ -130,6 +117,19 @@ class MainCalculationService(private val mainCalculatorActivity: MainCalculatorA
             }
         }
         return result
+    }
+
+    fun prepareStackValue(stackLevel: Int): String {
+        if (currentState.numberStack.size > stackLevel - 1) {
+            val number: Double =
+                currentState.numberStack[currentState.numberStack.size - stackLevel]
+            return DecimalFormat("#." + "#".repeat(settings.numberPrecision)).format(number)
+        }
+        return ""
+    }
+
+    private fun saveCurrentState() {
+        lastStates.push(CalculatorState(currentState))
     }
 
 }

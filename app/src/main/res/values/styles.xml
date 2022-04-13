@@ -18,7 +18,18 @@
         <item name="android:textColor">@color/calculator_button_text</item>
         <item name="android:textSize">20sp</item>
         <item name="android:padding">0dp</item>
-        <item name="android:onClick">onButtonClicked</item>
+    </style>
+
+    <style name="CalculatorButton.Number">
+        <item name="android:onClick">onNumberButtonClicked</item>
+    </style>
+
+    <style name="CalculatorButton.Calculation">
+        <item name="android:onClick">onCalculationButtonClicked</item>
+    </style>
+
+    <style name="CalculatorButton.Action">
+        <item name="android:onClick">onActionButtonClicked</item>
     </style>
 
     <style name="CalculatorButtonRow">

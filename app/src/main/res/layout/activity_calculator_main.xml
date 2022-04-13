@@ -19,11 +19,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginEnd="10dp"
+            android:background="@color/light_grey"
             android:onClick="onSettingsButtonClicked"
             android:text="@string/settings"
-            android:background="@color/light_grey"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -127,96 +126,95 @@
             <TableRow style="@style/CalculatorButtonRow">
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Calculation"
                     android:text="+" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Calculation"
                     android:text="-" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Calculation"
                     android:text="*" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Action"
                     android:text="ac" />
             </TableRow>
 
             <TableRow style="@style/CalculatorButtonRow">
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Calculation"
                     android:text="/" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Calculation"
                     android:text="y^x" />
 
                 <Button
-                    style="@style/CalculatorButton"
-                    android:onClick="undoCalculatorState"
-                    android:text="sqrt" />
+                    style="@style/CalculatorButton.Calculation"
+                    android:text="√" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Action"
                     android:text="drop" />
             </TableRow>
 
             <TableRow style="@style/CalculatorButtonRow">
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Number"
                     android:text="7" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Number"
                     android:text="8" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Number"
                     android:text="9" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Action"
                     android:text="swap" />
             </TableRow>
 
             <TableRow style="@style/CalculatorButtonRow">
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Number"
                     android:text="4" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Number"
                     android:text="5" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Number"
                     android:text="6" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Action"
                     android:text="enter" />
             </TableRow>
 
             <TableRow style="@style/CalculatorButtonRow">
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Number"
                     android:text="1" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Number"
                     android:text="2" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Number"
                     android:text="3" />
 
                 <Button
-                    style="@style/CalculatorButton"
+                    style="@style/CalculatorButton.Number"
                     android:text="0" />
             </TableRow>
 

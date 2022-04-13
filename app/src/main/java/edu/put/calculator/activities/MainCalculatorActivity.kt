@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -36,8 +37,16 @@ class MainCalculatorActivity : AppCompatActivity() {
         }
     }
 
-    fun onButtonClicked(view: View) {
-        mainCalculationService.onButtonClicked(view)
+    fun onNumberButtonClicked(view: View) {
+        mainCalculationService.onNumberButtonClicked(view as Button)
+    }
+
+    fun onCalculationButtonClicked(view: View) {
+        mainCalculationService.onCalculationButtonClicked(view as Button)
+    }
+
+    fun onActionButtonClicked(view: View) {
+        mainCalculationService.onActionButtonClicked(view as Button)
     }
 
     fun undoCalculatorState(@Suppress("UNUSED_PARAMETER") view: View) {
