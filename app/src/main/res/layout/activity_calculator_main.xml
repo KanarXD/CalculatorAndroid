@@ -36,12 +36,12 @@
         tools:ignore="HardcodedText">
 
         <LinearLayout
+            android:id="@+id/calculator_stack_area"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="5dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="0.4"
-            android:background="@color/green"
             android:orientation="vertical"
             android:padding="10dp"
             tools:ignore="NestedWeights">
@@ -139,6 +139,10 @@
 
                 <Button
                     style="@style/CalculatorButton.Action"
+                    android:text="c" />
+
+                <Button
+                    style="@style/CalculatorButton.Action"
                     android:text="ac" />
             </TableRow>
 
@@ -155,6 +159,10 @@
                 <Button
                     style="@style/CalculatorButton.Calculation"
                     android:text="√" />
+
+                <Button
+                    style="@style/CalculatorButton.Number"
+                    android:text="." />
 
                 <Button
                     style="@style/CalculatorButton.Action"

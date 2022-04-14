@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import edu.put.calculator.R
 import edu.put.calculator.databinding.ActivityCalculatorMainBinding
 import edu.put.calculator.models.CalculatorSettings
-import edu.put.calculator.service.MainCalculationService
+import edu.put.calculator.services.MainCalculationService
 
 class MainCalculatorActivity : AppCompatActivity() {
     @Suppress("PrivatePropertyName")
@@ -21,12 +21,14 @@ class MainCalculatorActivity : AppCompatActivity() {
     private lateinit var mainCalculationService: MainCalculationService
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCalculatorMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.main_activity_toolbar))
         mainCalculationService = MainCalculationService(this)
+        binding.calculatorStackArea.setBackgroundColor(mainCalculationService.settings.backgroundColorValue)
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
@@ -57,6 +59,7 @@ class MainCalculatorActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun drawStackArea() {
+        binding.calculatorStackArea.setBackgroundColor(mainCalculationService.settings.backgroundColorValue)
         binding.stackCounter.text = "STACK: ${mainCalculationService.currentState.numberStack.size}"
         binding.numberInputText.text = mainCalculationService.currentState.numberInputString
         binding.stackLevel1.text = mainCalculationService.prepareStackValue(1)

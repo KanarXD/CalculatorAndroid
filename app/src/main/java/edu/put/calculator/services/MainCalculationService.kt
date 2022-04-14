@@ -1,5 +1,6 @@
-package edu.put.calculator.service
+package edu.put.calculator.services
 
+import android.graphics.Color
 import android.util.Log
 import android.widget.Button
 import edu.put.calculator.activities.MainCalculatorActivity
@@ -13,7 +14,7 @@ class MainCalculationService(private val mainCalculatorActivity: MainCalculatorA
     private val TAG = "MainCalculationService"
     private val lastStates: Stack<CalculatorState> = Stack()
     var currentState: CalculatorState = CalculatorState()
-    var settings: CalculatorSettings = CalculatorSettings(5)
+    var settings: CalculatorSettings = CalculatorSettings(5, Color.GREEN)
 
     fun onNumberButtonClicked(button: Button) {
         val buttonString: String = button.text as String

@@ -10,7 +10,7 @@
     </style>
 
     <style name="CalculatorButton">
-        <item name="android:layout_marginHorizontal">5dp</item>
+        <item name="android:layout_marginHorizontal">2dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -33,7 +33,7 @@
     </style>
 
     <style name="CalculatorButtonRow">
-        <item name="android:layout_marginVertical">5dp</item>
+        <item name="android:layout_marginVertical">2dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">1</item>
