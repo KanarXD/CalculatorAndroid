@@ -74,9 +74,9 @@ class MainCalculationService {
     }
 
     fun onActionButtonClicked(button: Button) {
-        val buttonString: String = button.text as String
-        Log.d(TAG, "Clicked action button text: $buttonString")
-        when (buttonString) {
+        val action: String = button.text as String
+        Log.d(TAG, "Clicked action button text: $action")
+        when (action) {
             "ac" -> {
                 Log.d(TAG, "AC button clicked")
                 saveCurrentState()
@@ -114,9 +114,22 @@ class MainCalculationService {
                             .format(poppedNumber)
                 }
             }
-            else -> {
-
+            "swap" -> {
+                Log.d(TAG, "SWAP button clicked")
+                if (currentState.numberStack.size < 2) {
+                    Log.d(
+                        TAG,
+                        "Stack has less than 2 numbers, cannot perform swap. Stack size: ${currentState.numberStack.size}"
+                    )
+                    return
+                }
+                saveCurrentState()
+                val number1: Double = currentState.numberStack.pop()
+                val number2: Double = currentState.numberStack.pop()
+                currentState.numberStack.push(number1)
+                currentState.numberStack.push(number2)
             }
+            else -> Log.d(TAG, "onActionButtonClicked unsupported action: $action")
         }
     }
 
