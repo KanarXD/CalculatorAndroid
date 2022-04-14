@@ -53,7 +53,9 @@
                 android:text="@string/color"
                 android:textSize="20sp" />
 
+
             <NumberPicker
+                android:id="@+id/background_color_picker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 

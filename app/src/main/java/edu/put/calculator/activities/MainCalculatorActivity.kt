@@ -10,19 +10,21 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import edu.put.calculator.R
+import edu.put.calculator.databinding.ActivityCalculatorMainBinding
 import edu.put.calculator.models.CalculatorSettings
 import edu.put.calculator.service.MainCalculationService
-import kotlinx.android.synthetic.main.activity_calculator_main.*
 
 class MainCalculatorActivity : AppCompatActivity() {
     @Suppress("PrivatePropertyName")
     private val TAG = "MainCalculatorActivity"
+    private lateinit var binding: ActivityCalculatorMainBinding
     private lateinit var mainCalculationService: MainCalculationService
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calculator_main)
+        binding = ActivityCalculatorMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.main_activity_toolbar))
         mainCalculationService = MainCalculationService(this)
         activityResultLauncher = registerForActivityResult(
@@ -55,12 +57,12 @@ class MainCalculatorActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun drawStackArea() {
-        stack_counter.text = "STACK: ${mainCalculationService.currentState.numberStack.size}"
-        numberInputText.text = mainCalculationService.currentState.numberInputString
-        stack_level_1.text = mainCalculationService.prepareStackValue(1)
-        stack_level_2.text = mainCalculationService.prepareStackValue(2)
-        stack_level_3.text = mainCalculationService.prepareStackValue(3)
-        stack_level_4.text = mainCalculationService.prepareStackValue(4)
+        binding.stackCounter.text = "STACK: ${mainCalculationService.currentState.numberStack.size}"
+        binding.numberInputText.text = mainCalculationService.currentState.numberInputString
+        binding.stackLevel1.text = mainCalculationService.prepareStackValue(1)
+        binding.stackLevel2.text = mainCalculationService.prepareStackValue(2)
+        binding.stackLevel3.text = mainCalculationService.prepareStackValue(3)
+        binding.stackLevel4.text = mainCalculationService.prepareStackValue(4)
     }
 
     @Suppress("UNUSED_PARAMETER")

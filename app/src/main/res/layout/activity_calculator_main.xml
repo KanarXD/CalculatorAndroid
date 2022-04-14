@@ -112,7 +112,7 @@
                     android:text="&#x279C;" />
 
                 <TextView
-                    android:id="@+id/numberInputText"
+                    android:id="@+id/number_input_text"
                     style="@style/CalculatorStackAreaTextView.Number" />
             </LinearLayout>
 
