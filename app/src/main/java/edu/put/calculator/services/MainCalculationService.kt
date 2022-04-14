@@ -105,6 +105,7 @@ class MainCalculationService {
             }
             "drop" -> {
                 Log.d(TAG, "DROP button clicked")
+                currentState.numberInputString = ""
                 if (currentState.numberStack.size > 0) {
                     saveCurrentState()
                     val poppedNumber: Double = currentState.numberStack.pop()

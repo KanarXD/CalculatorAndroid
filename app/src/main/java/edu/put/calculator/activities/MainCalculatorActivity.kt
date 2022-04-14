@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -66,8 +68,13 @@ class MainCalculatorActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun drawStackArea() {
+        if (mainCalculationService.currentState.numberInputString.isBlank()) {
+            binding.numberInputTextRow.visibility = GONE
+        } else {
+            binding.numberInputText.text = mainCalculationService.currentState.numberInputString
+            binding.numberInputTextRow.visibility = VISIBLE
+        }
         binding.stackCounter.text = "STACK: ${mainCalculationService.currentState.numberStack.size}"
-        binding.numberInputText.text = mainCalculationService.currentState.numberInputString
         binding.stackLevel1.text = mainCalculationService.prepareStackValue(1)
         binding.stackLevel2.text = mainCalculationService.prepareStackValue(2)
         binding.stackLevel3.text = mainCalculationService.prepareStackValue(3)

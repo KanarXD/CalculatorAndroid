@@ -105,7 +105,10 @@
                     style="@style/CalculatorStackAreaTextView.Number" />
             </LinearLayout>
 
-            <LinearLayout style="@style/CalculatorStackAreaRow">
+            <LinearLayout
+                android:id="@+id/number_input_text_row"
+                style="@style/CalculatorStackAreaRow"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/CalculatorStackAreaTextView.Text"
