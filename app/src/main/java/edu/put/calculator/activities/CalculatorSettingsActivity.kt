@@ -11,18 +11,18 @@ import edu.put.calculator.databinding.ActivityCalculatorSettingsBinding
 import edu.put.calculator.models.CalculatorSettings
 import edu.put.calculator.models.NamedColor
 
-@Suppress("PrivatePropertyName")
+private const val TAG = "CalculatorSettingsActivity"
+private val COLOR_VALUES: Array<NamedColor> = arrayOf(
+    NamedColor("GREEN", Color.GREEN),
+    NamedColor("BLUE", Color.BLUE),
+    NamedColor("YELLOW", Color.YELLOW),
+    NamedColor("CYAN", Color.CYAN),
+    NamedColor("WHITE", Color.WHITE)
+)
+
 class CalculatorSettingsActivity : AppCompatActivity() {
-    private val TAG = "CalculatorSettingsActivity"
     private lateinit var binding: ActivityCalculatorSettingsBinding
     private lateinit var currentSettings: CalculatorSettings
-    private val COLOR_VALUES: Array<NamedColor> = arrayOf(
-        NamedColor("GREEN", Color.GREEN),
-        NamedColor("BLUE", Color.BLUE),
-        NamedColor("YELLOW", Color.YELLOW),
-        NamedColor("CYAN", Color.CYAN),
-        NamedColor("WHITE", Color.WHITE)
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

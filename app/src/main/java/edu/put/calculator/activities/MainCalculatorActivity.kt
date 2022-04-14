@@ -4,20 +4,25 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GestureDetectorCompat
 import edu.put.calculator.R
 import edu.put.calculator.databinding.ActivityCalculatorMainBinding
 import edu.put.calculator.models.CalculatorSettings
 import edu.put.calculator.services.MainCalculationService
+import kotlin.math.abs
+
+private const val TAG = "MainCalculatorActivity"
 
 class MainCalculatorActivity : AppCompatActivity() {
-    @Suppress("PrivatePropertyName")
-    private val TAG = "MainCalculatorActivity"
     private lateinit var binding: ActivityCalculatorMainBinding
+    private lateinit var gestureDetectorCompat: GestureDetectorCompat
     private lateinit var mainCalculationService: MainCalculationService
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
@@ -27,7 +32,8 @@ class MainCalculatorActivity : AppCompatActivity() {
         binding = ActivityCalculatorMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(findViewById(R.id.main_activity_toolbar))
-        mainCalculationService = MainCalculationService(this)
+        gestureDetectorCompat = GestureDetectorCompat(this, MainCalculatorGestureListener())
+        mainCalculationService = MainCalculationService()
         binding.calculatorStackArea.setBackgroundColor(mainCalculationService.settings.backgroundColorValue)
         activityResultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -40,6 +46,7 @@ class MainCalculatorActivity : AppCompatActivity() {
                 drawStackArea()
             }
         }
+
     }
 
     fun onNumberButtonClicked(view: View) {
@@ -54,11 +61,6 @@ class MainCalculatorActivity : AppCompatActivity() {
 
     fun onActionButtonClicked(view: View) {
         mainCalculationService.onActionButtonClicked(view as Button)
-        drawStackArea()
-    }
-
-    fun undoCalculatorState(@Suppress("UNUSED_PARAMETER") view: View) {
-        mainCalculationService.undoCalculatorState()
         drawStackArea()
     }
 
@@ -77,6 +79,35 @@ class MainCalculatorActivity : AppCompatActivity() {
         val intent = Intent(this, CalculatorSettingsActivity::class.java)
         intent.putExtra("settings", mainCalculationService.settings)
         activityResultLauncher.launch(intent)
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        gestureDetectorCompat.onTouchEvent(event)
+        return super.onTouchEvent(event)
+    }
+
+    private inner class MainCalculatorGestureListener : GestureDetector.SimpleOnGestureListener() {
+
+        override fun onFling(
+            event1: MotionEvent,
+            event2: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            Log.d(TAG, "onFling: $event1 $event2")
+            val diffY: Float = event2.y - event1.y
+            val diffX: Float = event2.x - event1.x
+            if (abs(diffX) > abs(diffY) && diffX > 0) {
+                onSwipeRight()
+            }
+            return true
+        }
+
+        private fun onSwipeRight() {
+            Log.d(TAG, "onSwipeRight")
+            mainCalculationService.undoCalculatorState()
+            drawStackArea()
+        }
     }
 
 }

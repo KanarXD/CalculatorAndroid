@@ -3,7 +3,6 @@ package edu.put.calculator.services
 import android.graphics.Color
 import android.util.Log
 import android.widget.Button
-import edu.put.calculator.activities.MainCalculatorActivity
 import edu.put.calculator.models.CalculatorSettings
 import edu.put.calculator.models.CalculatorState
 import java.text.DecimalFormat
@@ -11,9 +10,9 @@ import java.util.*
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class MainCalculationService(private val mainCalculatorActivity: MainCalculatorActivity) {
-    @Suppress("PrivatePropertyName")
-    private val TAG = "MainCalculationService"
+private const val TAG = "MainCalculationService"
+
+class MainCalculationService {
     private val lastStates: Stack<CalculatorState> = Stack()
     var currentState: CalculatorState = CalculatorState()
     var settings: CalculatorSettings = CalculatorSettings(5, Color.GREEN)
