@@ -8,6 +8,8 @@ import edu.put.calculator.models.CalculatorSettings
 import edu.put.calculator.models.CalculatorState
 import java.text.DecimalFormat
 import java.util.*
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class MainCalculationService(private val mainCalculatorActivity: MainCalculatorActivity) {
     @Suppress("PrivatePropertyName")
@@ -19,39 +21,57 @@ class MainCalculationService(private val mainCalculatorActivity: MainCalculatorA
     fun onNumberButtonClicked(button: Button) {
         val buttonString: String = button.text as String
         Log.d(TAG, "Clicked number button text: $buttonString")
+        if (buttonString == ".") {
+            Log.d(TAG, "Number button clicked: .")
+            if (currentState.numberInputString.contains('.')) {
+                Log.d(TAG, "NumberInputString already contains: .")
+                return
+            }
+            currentState.numberInputString += "."
+            return
+        }
         val number: Int? = buttonString.toIntOrNull()
         if (number != null) {
             Log.d(TAG, "Number button clicked: $number")
             saveCurrentState()
             currentState.numberInputString += number.toString()
-            mainCalculatorActivity.drawStackArea()
             return
         }
     }
 
     fun onCalculationButtonClicked(button: Button) {
-        val buttonString: String = button.text as String
-        Log.d(TAG, "Clicked calculation button text: $buttonString")
-        if (buttonString.matches("^[-+*/]$".toRegex())) {
-            val operator: String = buttonString
-            Log.d(TAG, "Math operator button clicked: $operator")
-            if (currentState.numberStack.size < 2) {
+        val operator: String = button.text as String
+        Log.d(TAG, "Clicked calculation button text: $operator")
+        if (operator == "√") {
+            if (currentState.numberStack.size < 1) {
                 Log.d(
                     TAG,
-                    "Stack has less than 2 numbers, cannot perform calculation. Stack size: ${currentState.numberStack.size}"
+                    "Stack has less than 1 number, cannot perform calculation. Stack size: ${currentState.numberStack.size}"
                 )
                 return
             }
             saveCurrentState()
-            val number2: Double = currentState.numberStack.pop()
-            val number1: Double = currentState.numberStack.pop()
-            Log.d(TAG, "Performing calculation: $number1 $operator $number2")
-            val result: Double = calculateOperation(operator, number1, number2)
-            Log.d(TAG, "Performed calculation: $number1 $operator $number2 = $result")
+            val number: Double = currentState.numberStack.pop()
+            Log.d(TAG, "Performing calculation: √ $number")
+            val result: Double = sqrt(number)
+            Log.d(TAG, "Performed calculation: √ $number = $result")
             currentState.numberStack.push(result)
-            mainCalculatorActivity.drawStackArea()
             return
         }
+        if (currentState.numberStack.size < 2) {
+            Log.d(
+                TAG,
+                "Stack has less than 2 numbers, cannot perform calculation. Stack size: ${currentState.numberStack.size}"
+            )
+            return
+        }
+        saveCurrentState()
+        val number2: Double = currentState.numberStack.pop()
+        val number1: Double = currentState.numberStack.pop()
+        Log.d(TAG, "Performing calculation: $number1 $operator $number2")
+        val result: Double = calculateOperation(operator, number1, number2)
+        Log.d(TAG, "Performed calculation: $number1 $operator $number2 = $result")
+        currentState.numberStack.push(result)
     }
 
     fun onActionButtonClicked(button: Button) {
@@ -63,7 +83,14 @@ class MainCalculationService(private val mainCalculatorActivity: MainCalculatorA
                 saveCurrentState()
                 currentState.numberStack.clear()
                 currentState.numberInputString = ""
-                mainCalculatorActivity.drawStackArea()
+            }
+            "c" -> {
+                Log.d(TAG, "C button clicked")
+                if (currentState.numberInputString.isNotEmpty()) {
+                    saveCurrentState()
+                    currentState.numberInputString = currentState.numberInputString
+                        .substring(0, currentState.numberInputString.length - 1)
+                }
             }
             "enter" -> {
                 Log.d(TAG, "ENTER button clicked")
@@ -76,15 +103,15 @@ class MainCalculationService(private val mainCalculatorActivity: MainCalculatorA
                 saveCurrentState()
                 currentState.numberInputString = ""
                 currentState.numberStack.push(numberInput)
-                mainCalculatorActivity.drawStackArea()
             }
             "drop" -> {
                 Log.d(TAG, "DROP button clicked")
                 if (currentState.numberStack.size > 0) {
                     saveCurrentState()
-                    val poppedNumber: Number = currentState.numberStack.pop()
-                    currentState.numberInputString = poppedNumber.toString()
-                    mainCalculatorActivity.drawStackArea()
+                    val poppedNumber: Double = currentState.numberStack.pop()
+                    currentState.numberInputString =
+                        DecimalFormat("#." + "#".repeat(settings.numberPrecision))
+                            .format(poppedNumber)
                 }
             }
             else -> {
@@ -100,7 +127,6 @@ class MainCalculationService(private val mainCalculatorActivity: MainCalculatorA
         }
         Log.d(TAG, "Performing undo")
         currentState = lastStates.pop()
-        mainCalculatorActivity.drawStackArea()
     }
 
     private fun calculateOperation(
@@ -113,6 +139,7 @@ class MainCalculationService(private val mainCalculatorActivity: MainCalculatorA
             "-" -> number1 - number2
             "*" -> number1 * number2
             "/" -> number1 / number2
+            "y^x" -> number1.pow(number2)
             else -> {
                 throw Exception("Not supported operation: $operation")
             }

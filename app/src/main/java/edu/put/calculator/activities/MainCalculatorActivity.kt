@@ -36,6 +36,7 @@ class MainCalculatorActivity : AppCompatActivity() {
                 val newSettings: CalculatorSettings = result.data?.getParcelableExtra("settings")!!
                 Log.d(TAG, "New settings: $newSettings")
                 mainCalculationService.settings = newSettings
+                binding.calculatorStackArea.setBackgroundColor(mainCalculationService.settings.backgroundColorValue)
                 drawStackArea()
             }
         }
@@ -43,23 +44,26 @@ class MainCalculatorActivity : AppCompatActivity() {
 
     fun onNumberButtonClicked(view: View) {
         mainCalculationService.onNumberButtonClicked(view as Button)
+        drawStackArea()
     }
 
     fun onCalculationButtonClicked(view: View) {
         mainCalculationService.onCalculationButtonClicked(view as Button)
+        drawStackArea()
     }
 
     fun onActionButtonClicked(view: View) {
         mainCalculationService.onActionButtonClicked(view as Button)
+        drawStackArea()
     }
 
     fun undoCalculatorState(@Suppress("UNUSED_PARAMETER") view: View) {
         mainCalculationService.undoCalculatorState()
+        drawStackArea()
     }
 
     @SuppressLint("SetTextI18n")
     fun drawStackArea() {
-        binding.calculatorStackArea.setBackgroundColor(mainCalculationService.settings.backgroundColorValue)
         binding.stackCounter.text = "STACK: ${mainCalculationService.currentState.numberStack.size}"
         binding.numberInputText.text = mainCalculationService.currentState.numberInputString
         binding.stackLevel1.text = mainCalculationService.prepareStackValue(1)
