@@ -12,6 +12,9 @@ import kotlin.math.sqrt
 
 private const val TAG = "MainCalculationService"
 
+private const val MAX_VALUE_LENGTH = 15
+private const val MAX_VALUE = 10e15
+
 class MainCalculationService {
     private val lastStates: Stack<CalculatorState> = Stack()
     var currentState: CalculatorState = CalculatorState()
@@ -20,6 +23,10 @@ class MainCalculationService {
     fun onNumberButtonClicked(button: Button) {
         val buttonString: String = button.text as String
         Log.d(TAG, "Clicked number button text: $buttonString")
+        if (currentState.numberInputString.length >= MAX_VALUE_LENGTH) {
+            Log.d(TAG, "Too long value")
+            return
+        }
         if (buttonString == ".") {
             Log.d(TAG, "Number button clicked: .")
             if (currentState.numberInputString.contains('.')) {
@@ -67,7 +74,10 @@ class MainCalculationService {
         val number2: Double = currentState.numberStack.pop()
         val number1: Double = currentState.numberStack.pop()
         Log.d(TAG, "Performing calculation: $number1 $operator $number2")
-        val result: Double = calculateOperation(operator, number1, number2)
+        var result: Double = calculateOperation(operator, number1, number2)
+        if (result > MAX_VALUE) {
+            result = if (result >= 0) Double.POSITIVE_INFINITY else Double.NEGATIVE_INFINITY
+        }
         Log.d(TAG, "Performed calculation: $number1 $operator $number2 = $result")
         currentState.numberStack.push(result)
     }
@@ -108,7 +118,9 @@ class MainCalculationService {
                 if (currentState.numberStack.size > 0) {
                     saveCurrentState()
                     val poppedNumber: Double = currentState.numberStack.pop()
-                    currentState.numberInputString = formatNumberToPrecision(poppedNumber)
+                    if (poppedNumber != Double.NEGATIVE_INFINITY && poppedNumber != Double.POSITIVE_INFINITY) {
+                        currentState.numberInputString = formatNumberToPrecision(poppedNumber)
+                    }
                 }
             }
             "+/-" -> {
