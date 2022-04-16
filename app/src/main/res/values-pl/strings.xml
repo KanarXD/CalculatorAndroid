@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Kalkulator</string>
+    <string name="number_precision">Precyzja liczb</string>
+    <string name="color">Kolor</string>
+    <string name="save">zapisz</string>
+    <string name="settings">ustawienia</string>
+    <string name="blue">niebieski</string>
+    <string name="green">zielony</string>
+    <string name="yellow">żółty</string>
+    <string name="cyan">cyjanowy</string>
+    <string name="white">biały</string>
+</resources>

@@ -48,7 +48,7 @@ class MainCalculatorActivity : AppCompatActivity() {
                 drawStackArea()
             }
         }
-
+        drawStackArea()
     }
 
     fun onNumberButtonClicked(view: View) {

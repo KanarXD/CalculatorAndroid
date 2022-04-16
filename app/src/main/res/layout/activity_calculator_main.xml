@@ -21,6 +21,7 @@
             android:layout_margin="10dp"
             android:background="@color/toolbar_button_background"
             android:onClick="onSettingsButtonClicked"
+            android:paddingHorizontal="10dp"
             android:text="@string/settings"
             android:textColor="@color/calculator_button_text" />
 
@@ -56,8 +57,7 @@
                 <TextView
                     android:id="@+id/stack_counter"
                     style="@style/CalculatorStackAreaTextView.Header"
-                    android:layout_weight="0.4"
-                    android:text="STACK: 0" />
+                    android:layout_weight="0.4" />
             </LinearLayout>
 
             <LinearLayout style="@style/CalculatorStackAreaRow">
