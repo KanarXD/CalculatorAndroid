@@ -32,7 +32,6 @@ class MainCalculationService {
         val number: Int? = buttonString.toIntOrNull()
         if (number != null) {
             Log.d(TAG, "Number button clicked: $number")
-            saveCurrentState()
             currentState.numberInputString += number.toString()
             return
         }
@@ -109,9 +108,15 @@ class MainCalculationService {
                 if (currentState.numberStack.size > 0) {
                     saveCurrentState()
                     val poppedNumber: Double = currentState.numberStack.pop()
-                    currentState.numberInputString =
-                        DecimalFormat("#." + "#".repeat(settings.numberPrecision))
-                            .format(poppedNumber)
+                    currentState.numberInputString = formatNumberToPrecision(poppedNumber)
+                }
+            }
+            "+/-" -> {
+                Log.d(TAG, "+/- button clicked")
+                if (currentState.numberStack.size > 0) {
+                    saveCurrentState()
+                    val poppedNumber: Double = currentState.numberStack.pop()
+                    currentState.numberStack.push(-poppedNumber)
                 }
             }
             "swap" -> {
@@ -164,9 +169,20 @@ class MainCalculationService {
         if (currentState.numberStack.size > stackLevel - 1) {
             val number: Double =
                 currentState.numberStack[currentState.numberStack.size - stackLevel]
-            return DecimalFormat("#." + "#".repeat(settings.numberPrecision)).format(number)
+            return formatNumberToPrecision(number)
         }
         return ""
+    }
+
+    private fun formatNumberToPrecision(number: Double): String {
+        var formatedNumber: String =
+            DecimalFormat("#." + "#".repeat(settings.numberPrecision))
+                .format(number)
+                .replace(',', '.')
+        if (formatedNumber.last() == '.') {
+            formatedNumber = formatedNumber.substring(0, formatedNumber.length - 1)
+        }
+        return formatedNumber
     }
 
     private fun saveCurrentState() {
